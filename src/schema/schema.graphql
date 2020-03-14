@@ -1,0 +1,26 @@
+scalar Odd
+
+type Query {
+    getUser(id: Odd!): User
+    getTeam(id: Int!): Team
+    getTeams: [Team]!
+    getUsers: [User]!
+}
+
+type Mutation {
+    createUser(firstName: String!, age: Int!, teamId: Int!, lastName: String): User
+}
+
+type User {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    age: Int!
+    team: Team
+}
+
+type Team {
+    id: Int!
+    name: String!
+    users: [User!]
+}
