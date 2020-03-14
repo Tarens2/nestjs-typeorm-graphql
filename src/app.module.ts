@@ -3,8 +3,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { Connection } from 'typeorm';
-import { UsersModule } from './repositories/users/users.module';
-import { TeamsModule } from './repositories/teams/teams.module';
+import { UsersModule } from './users/users.module';
+import { TeamsModule } from './teams/teams.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TeamsModule } from './repositories/teams/teams.module';
 
     UsersModule,
     TeamsModule,
+    AuthModule,
   ],
 })
 export class AppModule {
