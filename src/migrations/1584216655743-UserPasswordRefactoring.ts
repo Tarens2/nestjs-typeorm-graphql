@@ -18,8 +18,8 @@ export class UserPasswordRefactoring1584216655743 implements MigrationInterface 
         ]);
 
         await queryRunner.query(`
-            UPDATE "user" as u1 
-                set "username" = (select concat(u."lastName", u."firstName", u."id") from "user" as u 
+            UPDATE "user" as u1
+                set "username" = (select concat(u."lastName", u."firstName", u."id") from "user" as u
                     where u.id = u1.id)
         `);
 
