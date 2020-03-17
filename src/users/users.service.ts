@@ -14,6 +14,14 @@ export class UsersService {
     return this.usersRepository.find(options);
   }
 
+  async create(username: string, password: string) {
+    const user = new User();
+    user.username = username;
+    user.password = password;
+
+    return await this.usersRepository.save(user);
+  }
+
   findOne(id: number) {
     return this.usersRepository.findOne(id);
   }

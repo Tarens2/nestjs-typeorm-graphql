@@ -6,8 +6,13 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export interface LoginResponse {
+    accessToken: string;
+}
+
 export interface IMutation {
-    createUser(firstName: string, age: number, teamId: number, lastName?: string): User | Promise<User>;
+    createUser(username: string, password: string): User | Promise<User>;
+    login(username: string, password: string): LoginResponse | Promise<LoginResponse>;
 }
 
 export interface IQuery {
@@ -26,10 +31,11 @@ export interface Team {
 
 export interface User {
     id: number;
-    firstName: string;
-    lastName: string;
-    age: number;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
     team?: Team;
+    username: string;
 }
 
 export type Odd = any;

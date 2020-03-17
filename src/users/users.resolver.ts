@@ -4,6 +4,7 @@ import {
   Args,
   Parent,
   Resolver,
+  Mutation,
 } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { TeamsService } from '../teams/teams.service';
@@ -18,6 +19,14 @@ export class UsersResolver {
     private readonly usersService: UsersService,
     private readonly teamsService: TeamsService,
   ) {}
+
+  @Mutation('createUser')
+  async createUser(
+    @Args('username') username: string,
+    @Args('password') password: string,
+  ) {
+    return this.usersService.create(username, password);
+  }
 
   @Query('getUser')
   async getUser(@Args('id') id: number) {

@@ -9,20 +9,26 @@ type Query {
 }
 
 type Mutation {
-    createUser(firstName: String!, age: Int!, teamId: Int!, lastName: String): User
+    createUser(username: String!, password: String!): User
+    login(username: String!, password: String!): LoginResponse
 }
 
 type User {
     id: Int!
-    firstName: String!
-    lastName: String!
-    age: Int!
+    firstName: String
+    lastName: String
+    age: Int
     team: Team
+    username: String!
 }
 
 type Team {
     id: Int!
     name: String!
     users: [User!]
+}
+
+type LoginResponse {
+    accessToken: String!
 }
 

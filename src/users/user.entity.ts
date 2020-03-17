@@ -6,21 +6,27 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   firstName: string;
 
   @Column({
-    unique: true
+    unique: true,
   })
   username: string;
 
   @Column()
-  password: string
+  password: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   lastName: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   age: number;
 
   @ManyToOne(

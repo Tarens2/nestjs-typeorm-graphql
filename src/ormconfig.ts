@@ -1,4 +1,4 @@
-import {ConnectionOptions} from 'typeorm';
+import { ConnectionOptions } from 'typeorm';
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -8,7 +8,7 @@ const config: ConnectionOptions = {
   password: '',
   database: 'league',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: false,
+  synchronize: true,
   migrationsRun: true,
   logging: true,
   logger: 'file',
