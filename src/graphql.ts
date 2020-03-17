@@ -15,6 +15,7 @@ export interface IQuery {
     getTeam(id: number): Team | Promise<Team>;
     getTeams(): Team[] | Promise<Team[]>;
     getUsers(): User[] | Promise<User[]>;
+    getMe(): User | Promise<User>;
 }
 
 export interface Team {

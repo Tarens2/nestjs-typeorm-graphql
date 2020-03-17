@@ -7,6 +7,10 @@ import {
 } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { TeamsService } from '../teams/teams.service';
+import { User } from './user.entity';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '../auth/grql-auth.guard';
+import { CurrentUser } from '../decorators/current-user';
 
 @Resolver('User')
 export class UsersResolver {
@@ -28,5 +32,11 @@ export class UsersResolver {
   @ResolveProperty('team')
   async team(@Parent() user) {
     return user.team;
+  }
+
+  @Query('getMe')
+  @UseGuards(GqlAuthGuard)
+  getMe(@CurrentUser() user: User) {
+    return this.usersService.findOne(user.id);
   }
 }

@@ -17,6 +17,7 @@ import * as ormconfig from './ormconfig';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+      context: ({ req }) => ({ req }),
     }),
 
     UsersModule,

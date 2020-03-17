@@ -5,6 +5,7 @@ type Query {
     getTeam(id: Int!): Team
     getTeams: [Team]!
     getUsers: [User]!
+    getMe: User
 }
 
 type Mutation {
@@ -24,3 +25,4 @@ type Team {
     name: String!
     users: [User!]
 }
+
