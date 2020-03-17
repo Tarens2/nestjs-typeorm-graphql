@@ -6,11 +6,11 @@ type Query {
     getTeams: [Team]!
     getUsers: [User]!
     getMe: User
+    login(username: String!, password: String!): LoginResponse
 }
 
 type Mutation {
     createUser(username: String!, password: String!): User
-    login(username: String!, password: String!): LoginResponse
 }
 
 type User {

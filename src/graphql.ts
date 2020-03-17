@@ -12,7 +12,6 @@ export interface LoginResponse {
 
 export interface IMutation {
     createUser(username: string, password: string): User | Promise<User>;
-    login(username: string, password: string): LoginResponse | Promise<LoginResponse>;
 }
 
 export interface IQuery {
@@ -21,6 +20,7 @@ export interface IQuery {
     getTeams(): Team[] | Promise<Team[]>;
     getUsers(): User[] | Promise<User[]>;
     getMe(): User | Promise<User>;
+    login(username: string, password: string): LoginResponse | Promise<LoginResponse>;
 }
 
 export interface Team {
