@@ -45,13 +45,13 @@ export class UsersResolver {
 
   @Query('getMe')
   @UseGuards(GqlAuthGuard)
-  getMe(@CurrentUser() user: User) {
-    return this.usersService.findOne(user.id);
+  getMe(@CurrentUser() user) {
+    return this.usersService.findByUsername(user.username);
   }
 
   @Query('login')
   @UseGuards(GqlLocalAuthGuard)
-  async login(_: never, user: User) {
+  async login(_: never, user: { username: string; password: string }) {
     return this.authService.login(user);
   }
 }
