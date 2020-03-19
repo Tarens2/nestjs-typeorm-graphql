@@ -14,6 +14,6 @@ export class GqlAuthGuard extends AuthGuard('jwt') {
 export class GqlLocalAuthGuard extends AuthGuard('local') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
-    return { ...ctx.getContext().req, body: ctx.getArgs() };
+    return { ...ctx.getContext().req, body: ctx.getArgs().user };
   }
 }

@@ -12,15 +12,17 @@ import { User } from './user.entity';
 import { GqlAuthGuard, GqlLocalAuthGuard } from '../auth/grql-auth.guard';
 import { CurrentUser } from '../decorators/current-user';
 import { AuthService } from '../auth/auth.service';
+import { LoginInput, LoginOutput, UserGql } from './user.gql';
+import { TeamGql } from '../teams/team.gql';
 
-@Resolver('User')
+@Resolver(() => UserGql)
 export class UsersResolver {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
   ) {}
 
-  @Mutation('createUser')
+  @Mutation(() => UserGql)
   async createUser(
     @Args('username') username: string,
     @Args('password') password: string,
@@ -28,30 +30,30 @@ export class UsersResolver {
     return this.usersService.create(username, password);
   }
 
-  @Query('getUser')
+  @Query(() => UserGql)
   async getUser(@Args('id') id: number) {
     return this.usersService.findOne(id);
   }
 
-  @Query('getUsers')
+  @Query(() => [UserGql])
   async getUsers() {
     return this.usersService.findAll({ relations: ['team'] });
   }
 
-  @ResolveProperty('team')
+  @ResolveProperty(() => TeamGql)
   async team(@Parent() user) {
     return user.team;
   }
 
-  @Query('getMe')
+  @Query(() => UserGql)
   @UseGuards(GqlAuthGuard)
   getMe(@CurrentUser() user) {
     return this.usersService.findByUsername(user.username);
   }
 
-  @Query('login')
+  @Query(() => LoginOutput)
   @UseGuards(GqlLocalAuthGuard)
-  async login(_: never, user: { username: string; password: string }) {
-    return this.authService.login(user);
+  async login(@Args('user') loginInput: LoginInput): Promise<LoginOutput> {
+    return this.authService.login(loginInput);
   }
 }
