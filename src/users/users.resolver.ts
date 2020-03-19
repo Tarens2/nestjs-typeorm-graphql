@@ -9,20 +9,24 @@ import {
 import { UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { GqlAuthGuard, GqlLocalAuthGuard } from '../auth/grql-auth.guard';
+import {
+  GqlAuthGuard,
+  GqlLocalAuthGuard,
+} from '../auth/guards/grql-auth.guard';
 import { CurrentUser } from '../decorators/current-user';
 import { AuthService } from '../auth/auth.service';
-import { LoginInput, LoginOutput, UserGql } from './user.gql';
-import { TeamGql } from '../teams/team.gql';
+import { LoginInput } from './dtos/login.input';
+import { LoginOutput } from './dtos/login.output';
+import { Team } from '../teams/team.entity';
 
-@Resolver(() => UserGql)
+@Resolver(() => User)
 export class UsersResolver {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
   ) {}
 
-  @Mutation(() => UserGql)
+  @Mutation(() => User)
   async createUser(
     @Args('username') username: string,
     @Args('password') password: string,
@@ -30,22 +34,22 @@ export class UsersResolver {
     return this.usersService.create(username, password);
   }
 
-  @Query(() => UserGql)
+  @Query(() => User)
   async getUser(@Args('id') id: number) {
     return this.usersService.findOne(id);
   }
 
-  @Query(() => [UserGql])
+  @Query(() => [User])
   async getUsers() {
     return this.usersService.findAll({ relations: ['team'] });
   }
 
-  @ResolveProperty(() => TeamGql)
+  @ResolveProperty(() => Team)
   async team(@Parent() user) {
     return user.team;
   }
 
-  @Query(() => UserGql)
+  @Query(() => User)
   @UseGuards(GqlAuthGuard)
   getMe(@CurrentUser() user) {
     return this.usersService.findByUsername(user.username);
