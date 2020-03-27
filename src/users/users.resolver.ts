@@ -1,10 +1,10 @@
 import {
-  ResolveProperty,
   Query,
   Args,
   Parent,
   Resolver,
   Mutation,
+  ResolveField,
 } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -18,12 +18,15 @@ import { AuthService } from '../auth/auth.service';
 import { LoginInput } from './dtos/login.input';
 import { LoginOutput } from './dtos/login.output';
 import { Team } from '../teams/team.entity';
+import { GameSession } from '../game-session/game-session.entity';
+import { GameSessionService } from '../game-session/game-session.service';
 
 @Resolver(() => User)
 export class UsersResolver {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
+    private readonly gameSessionService: GameSessionService,
   ) {}
 
   @Mutation(() => User)
@@ -44,7 +47,12 @@ export class UsersResolver {
     return this.usersService.findAll({ relations: ['team'] });
   }
 
-  @ResolveProperty(() => Team)
+  @Query(() => [GameSession])
+  async searchGame() {
+    return this.gameSessionService.searchAvailableGame();
+  }
+
+  @ResolveField(() => Team)
   async team(@Parent() user) {
     return user.team;
   }

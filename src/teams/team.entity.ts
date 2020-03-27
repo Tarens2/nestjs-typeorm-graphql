@@ -1,6 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from '../users/user.entity';
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { GameSession } from '../game-session/game-session.entity';
 
 @ObjectType()
 @Entity()
@@ -19,4 +26,11 @@ export class Team {
     user => user.team,
   )
   users: User[];
+
+  @Field(() => GameSession)
+  @OneToOne(
+    () => GameSession,
+    game => game.dire || game.radiant,
+  )
+  gameSession: GameSession;
 }

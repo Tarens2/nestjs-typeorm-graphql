@@ -4,6 +4,7 @@ import {
   Args,
   Parent,
   Resolver,
+  ResolveField,
 } from '@nestjs/graphql';
 import { TeamsService } from './teams.service';
 import { Team } from './team.entity';
@@ -27,7 +28,7 @@ export class TeamsResolver {
     return this.teamsService.findAll({ relations: ['users'] });
   }
 
-  @ResolveProperty(() => [User])
+  @ResolveField(() => [User])
   async team(@Parent() team) {
     return team.users;
   }

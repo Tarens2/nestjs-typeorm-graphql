@@ -6,6 +6,7 @@ import { TeamsModule } from './teams/teams.module';
 import * as ormconfig from './ormconfig';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { GameSessionModule } from './game-session/game-session.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
         req,
       }),
     }),
+    GameSessionModule,
   ],
 })
 export class AppModule {

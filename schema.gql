@@ -1,0 +1,51 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type GameSession {
+  id: Int!
+  name: String!
+  dire: Team!
+  radiant: Team!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+type LoginOutput {
+  accessToken: String!
+}
+
+type Mutation {
+  createUser(password: String!, username: String!): User!
+}
+
+type Query {
+  getTeam(id: Float!): Team!
+  getTeams: [Team!]!
+  getUser(id: Float!): User!
+  getUsers: [User!]!
+  searchGame: [GameSession!]!
+  getMe: User!
+  login(user: LoginInput!): LoginOutput!
+}
+
+type Team {
+  id: Int!
+  name: String
+  users: [User!]!
+  gameSession: GameSession!
+  team: [User!]!
+}
+
+type User {
+  id: Int!
+  firstName: String
+  username: String!
+  lastName: String
+  age: Float
+  team: Team!
+  password: String!
+}
